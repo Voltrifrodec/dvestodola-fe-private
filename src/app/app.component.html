@@ -12,28 +12,8 @@
 <ng-container *ngIf="actualMenu === menu.USERS">
 
   <h3>Používatelia</h3>
+  <router-outlet></router-outlet>
 
-  <form [formGroup]="form" (submit)="savePerson()">
-    <label>Meno:</label>
-    <input type="text" formControlName="name">
-    <p class="invalid-text" *ngIf="form.controls.name.invalid">Zadajte meno!</p>
-    <label>Priezvisko:</label>
-    <input type="text" formControlName="surname">
-    <p class="invalid-text" *ngIf="form.controls.surname.errors?.required">Zadajte priezvisko!</p>
-    <p class="invalid-text" *ngIf="form.controls.surname.errors?.minlength">Minimálna dĺžka priezviska sú 3 znaky!</p>
-    <input type="submit" [disabled]="form.invalid" value="Uložiť">
-  </form>
-
-  <table *ngIf="persons.length">
-    <tr>
-      <th>Meno</th>
-      <th>Priezvisko</th>
-    </tr>
-    <tr *ngFor="let person of persons">
-      <td>{{ person.name }}</td>
-      <td>{{ person.surname }}</td>
-    </tr>
-  </table>
 </ng-container>
 
 
