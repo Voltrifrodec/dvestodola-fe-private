@@ -1,11 +1,51 @@
-<div class="header">
-  <h1>{{ form.controls['projectTitle'].value }}</h1>
+<div class="menu">
+  <button (click)="changeMenu(menu.USERS)">Používatelia</button>
+  <button (click)="changeMenu(menu.BOOKS)">Knihy</button>
+  <button (click)="changeMenu(menu.BORROWINGS)">Výpožičky</button>
 </div>
 
-<form [formGroup]="form">
-  <label>Zadajte názov projektu:</label>
-  <!-- <input #projectTitle type="text" [value]="title"> -->
-  <input type="text" formControlName="projectTitle">
-</form>
 
-<!-- <button (click)="changeProjectTitle(projectTitle.value)">Zmeniť názov</button> -->
+<div class="header">
+  <h1>DveStodola</h1>
+</div>
+
+<ng-container *ngIf="actualMenu === menu.USERS">
+
+  <h3>Používatelia</h3>
+
+  <form [formGroup]="form" (submit)="savePerson()">
+    <label>Meno:</label>
+    <input type="text" formControlName="name">
+    <p class="invalid-text" *ngIf="form.controls.name.invalid">Zadajte meno!</p>
+    <label>Priezvisko:</label>
+    <input type="text" formControlName="surname">
+    <p class="invalid-text" *ngIf="form.controls.surname.errors?.required">Zadajte priezvisko!</p>
+    <p class="invalid-text" *ngIf="form.controls.surname.errors?.minlength">Minimálna dĺžka priezviska sú 3 znaky!</p>
+    <input type="submit" [disabled]="form.invalid" value="Uložiť">
+  </form>
+
+  <table *ngIf="persons.length">
+    <tr>
+      <th>Meno</th>
+      <th>Priezvisko</th>
+    </tr>
+    <tr *ngFor="let person of persons">
+      <td>{{ person.name }}</td>
+      <td>{{ person.surname }}</td>
+    </tr>
+  </table>
+</ng-container>
+
+
+<ng-container *ngIf="actualMenu === menu.BOOKS">
+
+  <h3>Knihy</h3>
+
+</ng-container>
+
+
+<ng-container *ngIf="actualMenu === menu.BORROWINGS">
+
+  <h3>Výpožičky</h3>
+
+</ng-container>
