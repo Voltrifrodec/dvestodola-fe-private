@@ -1,0 +1,10 @@
+input, label {
+    display: block;
+}
+
+input {
+    margin-bottom: 1rem;
+}
+button[type="reset"] {
+    margin-left: .5rem;
+}

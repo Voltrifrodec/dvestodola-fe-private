@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { User, Menu } from 'src/app/common/model/user.model';
+import { User } from 'src/app/common/model/user.model';
+import { HttpClient } from '@angular/common/http'
 
 @Component({
   selector: 'app-user-page',
@@ -9,45 +9,55 @@ import { User, Menu } from 'src/app/common/model/user.model';
 })
 export class UserPageComponent {
 
-  form: FormGroup;
+  constructor(private http: HttpClient) {
+    this.getPersons();
+  }
 
-  persons: Array<User> = [];
+  getPersons() : void {
+    this.http.get<User[]>('http://labs.fpv.umb.sk:8080/api/customers')
+      .subscribe((persons : User[]) => { this.persons = persons });
+  }
 
+  persons : Array<User> = [];
 
+  person? : User;
 
-  constructor() {
-    this.form = new FormGroup({
-      id: new FormControl(),
-      name: new FormControl(null, Validators.required),
-      surname: new FormControl(null, [Validators.required, Validators.minLength(3)])
+  createPerson(person : User) : void {
+    this.http.post('http://labs.fpv.umb.sk:8080/api/customers', person).subscribe(person => {
+      console.log('Osoba bola úspešne uložená.');
+      this.getPersons();
     });
+    // this.persons.push(person);
+    // console.log('Person List:', this.persons);
   }
 
-
-  savePerson(): void {
-    if (this.form.controls.id.value) {
-      const index = this.persons.findIndex(person => person.id === this.form.controls.id.value);
-      if (index !== -1) {
-        console.log('(Edit) Osoba -> ID:', index);
-        this.persons[index] = this.form.value;
-      }
-    }
-    else {
-      console.log('Osoba:', this.form.value);
-      this.persons.push({
-        id: Date.now(),
-        name: this.form.controls.name.value,
-        surname: this.form.controls.surname.value
-      });
-    }
-    this.form.reset();
+  updatePerson(person : User) : void {
+    this.http.put(`http://labs.fpv.umb.sk:8080/api/customers/${person.id}`, person).subscribe(person => {
+      console.log('Osoba bola úspešne zmenená.');
+      this.getPersons();
+    })
+    // const index = this.persons.findIndex(person => person.id === person.id);
+    // if(index !== -1) {
+    //   this.persons[index] = person;
+    //   this.person = undefined;
+    // }
+  }
+  
+  selectPersonToUpdate(personId : number) : void {
+    this.person = this.persons.find(person => person.id === personId);
   }
 
-  editPerson(index: number): void {
-    this.form.setValue(this.persons[index]);
+  deletePerson(personId : number) : void {
+    this.http.delete('http://labs.fpv.umb.sk:8080/api/customers/${personId}').subscribe(() => {
+      console.log('Osoba bola úspešne zmazaná.');
+      this.getPersons();
+    });
+    // const index = this.persons.findIndex(person => person.id === personId);
+    // if(index !== -1) {
+    //   this.persons.splice(index, 1);
+    // }
   }
 
-  deletePerson(index: number): void {
-    this.persons.splice(index, 1);
-  }
+  
+
 }

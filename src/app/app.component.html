@@ -1,7 +1,7 @@
 <div class="menu">
-  <button (click)="changeMenu(menu.USERS)">Používatelia</button>
-  <button (click)="changeMenu(menu.BOOKS)">Knihy</button>
-  <button (click)="changeMenu(menu.BORROWINGS)">Výpožičky</button>
+  <button routerLink="user">Používatelia</button>
+  <button routerLink="book">Knihy</button>
+  <button routerLink="borrowing">Výpožičky</button>
 </div>
 
 
@@ -9,23 +9,5 @@
   <h1>DveStodola</h1>
 </div>
 
-<ng-container *ngIf="actualMenu === menu.USERS">
 
-  <h3>Používatelia</h3>
-  <router-outlet></router-outlet>
-
-</ng-container>
-
-
-<ng-container *ngIf="actualMenu === menu.BOOKS">
-
-  <h3>Knihy</h3>
-
-</ng-container>
-
-
-<ng-container *ngIf="actualMenu === menu.BORROWINGS">
-
-  <h3>Výpožičky</h3>
-
-</ng-container>
+<router-outlet></router-outlet>
