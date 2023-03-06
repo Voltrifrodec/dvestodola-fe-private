@@ -7,11 +7,14 @@ import { HttpClient } from '@angular/common/http'
   templateUrl: './user-page.component.html',
   styleUrls: ['./user-page.component.css']
 })
+
 export class UserPageComponent {
 
+  //? Public Server: http://labs.fpv.umb.sk:8080/api/customers
   constructor(private http: HttpClient) {
     this.getPersons();
   }
+
 
   getPersons() : void {
     this.http.get<User[]>('http://labs.fpv.umb.sk:8080/api/customers')
@@ -23,8 +26,8 @@ export class UserPageComponent {
   person? : User;
 
   createPerson(person : User) : void {
-    this.http.post('http://labs.fpv.umb.sk:8080/api/customers', person).subscribe(person => {
-      console.log('Osoba bola úspešne uložená.');
+    this.http.post('http://labs.fpv.umb.sk:8080/api/customers', person).subscribe(() => {
+      console.log('Osoba bola uspesne ulozena');
       this.getPersons();
     });
     // this.persons.push(person);

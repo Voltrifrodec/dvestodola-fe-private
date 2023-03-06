@@ -5,8 +5,8 @@
     <th>Priezvisko</th>
   </tr>
   <tr *ngFor="let person of persons">
-    <td>{{ person.name }}</td>
-    <td>{{ person.surname }}</td>
+    <td>{{ person.firstName }}</td>
+    <td>{{ person.lastName }}</td>
     <td>
       <button (click)="updatePerson(person.id)">Upraviť</button>
       <button (click)="deletePerson(person.id)">Zmazať</button>
