@@ -10,6 +10,7 @@ import { BorrowingComponent } from './borrowing/borrowing.component';
 import { UserFormComponent } from './user/user-form/user-form.component';
 import { UserListComponent } from './user/user-list/user-list.component';
 import { HttpClientModule } from '@angular/common/http';
+import { UserService } from './user/user-service/user.service';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,9 @@ import { HttpClientModule } from '@angular/common/http';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    UserService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
