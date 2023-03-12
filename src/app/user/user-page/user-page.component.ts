@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { User } from 'src/app/common/model/user.model';
 import { HttpClient } from '@angular/common/http'
+import { UserService } from 'src/app/common/service/user.service';
 
 @Component({
   selector: 'app-user-page',
@@ -11,13 +12,13 @@ import { HttpClient } from '@angular/common/http'
 export class UserPageComponent {
 
   //? Public Server: http://labs.fpv.umb.sk:8080/api/customers
-  constructor(private http: HttpClient) {
+  constructor(private service: UserService) {
     this.getPersons();
   }
 
 
   getPersons() : void {
-    this.http.get<User[]>('http://labs.fpv.umb.sk:8080/api/customers')
+    this.service.getPersons()
       .subscribe((persons : User[]) => { this.persons = persons });
   }
 
